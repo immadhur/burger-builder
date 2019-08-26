@@ -1,0 +1,79 @@
+.Body1{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    /* flex-flow: row; */
+}
+
+.Body{
+    flex-flow:row;
+    display:flex;
+    justify-content:center;
+}
+/* .Label{
+    margin: 0 10px;
+    min-width: 100px;
+    text-align: left
+} */
+
+/* .Body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+} */
+
+.Body button {
+    display: block;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    width: 50px;
+    align-self: center;
+    border: 1px solid #AA6817;
+    cursor: pointer;
+    height: 30px;
+    outline: none;
+}
+
+.Body button:disabled {
+    background-color: #AC9980;
+    border: 1px solid #7E7365;
+    color: #ccc;
+    cursor: default;
+}
+
+.Body button:hover:disabled {
+    background-color: #AC9980;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.Label {
+    padding: 5px;
+    font-weight: bold;
+    width: 80px;
+    text-align: left
+}
+
+.Body .Less {  
+    background-color: #D39952;
+    color: white;
+    border-radius: 50px;
+}
+
+.Body .More {
+    background-color: #8F5E1E;
+    color: white;
+    border-radius: 50px;
+;}
+
+.Body .Less:hover, .Body .Less:active {  
+    background-color: #DAA972;
+    color: white;
+}
+
+.Body .More:hover,.Body .More:active {
+    background-color: #99703F;
+    color: white;
+}
