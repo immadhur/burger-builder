@@ -13,7 +13,7 @@ const buildControls=(props)=>{
 
     return(
         <div className={style.Body}>
-            <p>{props.totalPrice}</p>
+            <p>Current Price: <strong>{props.totalPrice}</strong></p>
             {controls}
         </div>
     );
