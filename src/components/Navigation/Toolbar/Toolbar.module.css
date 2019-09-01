@@ -1,0 +1,43 @@
+.Body{
+    width: 99%;
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    height: 56px;
+    position: fixed;
+    background-color: #8F5E1E;
+    top:0;
+    left: 0;
+    z-index: 90;
+}
+
+.SideDrawerToggle{
+    display: none;
+}
+
+h3{
+    display: inline;
+}
+
+@media (max-width:499px){
+    .DisplayNav{
+        display: none
+    }
+
+    h3{
+        display: none;
+    }
+
+    .SideDrawerToggle{
+        display: flex;
+        align-self: center;
+        flex-flow: column;
+    }
+
+    .SideDrawerToggle div{
+        height: 2px;
+        margin: 4px 0;
+        width: 25px;
+        background: white;
+    }
+}

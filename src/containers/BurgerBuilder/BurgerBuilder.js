@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import Burger from '../../components/Burger/Burger';
-import style from './BurgerBuilder.module.css'
+import style from './BurgerBuilder.module.css';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import DialogBoxModel from '../../components/UI/DialogBoxModel/DialogBoxModel';
+import OrderSummary from '../../components/Burger/BuildControls/OrderSummary/OrderSummary';
 
 const PriceChart = {
     cheese: 25,
@@ -19,7 +21,8 @@ class BurgerBuilder extends Component {
             meat: 0,
             salad: 0
         },
-        totalPrice: 0
+        totalPrice: 0,
+        showOrderSummary:false
     }
 
     addIngredientHandler = (ingred) => {
@@ -39,6 +42,13 @@ class BurgerBuilder extends Component {
         this.setState({ ingredients: updatedIngr, totalPrice });
     }
 
+    showSummaryDialog=()=>{
+        this.setState({showOrderSummary:true});
+    }
+
+    hideSummaryDialog=()=>{
+        this.setState({showOrderSummary:false});
+    }
 
     render() {
         let disableInfo = { ...this.state.ingredients };
@@ -47,13 +57,21 @@ class BurgerBuilder extends Component {
         }
 
         return (
-            <div className={style.Body}>
-                <Burger ingredients={this.state.ingredients} />
+            <div style={{'margin-top':'60px'}}>
+                <DialogBoxModel show={this.state.showOrderSummary} hideSummary={this.hideSummaryDialog}>
+                    <OrderSummary
+                     ingred={this.state.ingredients} 
+                     price={this.state.totalPrice}
+                     cancelClick={this.hideSummaryDialog}
+                     continueClick={this.hideSummaryDialog}/>
+                </DialogBoxModel>
+                <Burger ingredients={this.state.ingredients}/>
                 <BuildControls ingredients={this.state.ingredients}
                     addIngred={this.addIngredientHandler}
                     removeIngred={this.removeIngredientHandler}
-                    disable={disableInfo} 
-                    totalPrice={this.state.totalPrice}/>
+                    disable={disableInfo}
+                    totalPrice={this.state.totalPrice}
+                    showSummaryDialog={this.showSummaryDialog}/>
             </div>
         );
     }
