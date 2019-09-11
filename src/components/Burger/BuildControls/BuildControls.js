@@ -13,7 +13,7 @@ const buildControls=(props)=>{
 
     let disableOrderButton=false;
 
-    if(props.totalPrice==0)
+    if(props.totalPrice===0)
         disableOrderButton=true;
 
     return(

@@ -2,15 +2,16 @@ import React, { Component, Fragment } from 'react';
 import style from './DialogBoxModel.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-class DialogBox extends Component{
-    shouldComponentUpdate=(nextProps, nextState)=>{
-        return nextProps.show!==this.props.show;
+class DialogBox extends Component {
+    shouldComponentUpdate = (nextProps, nextState) => {
+        return nextProps.show !== this.props.show ||
+            nextProps.children !== this.props.children;
     }
-    render(){
+    render() {
 
         return (
             <Fragment>
-                <Backdrop hideBackdrop={this.props.hideSummary} isVisible={this.props.show}/>
+                <Backdrop hideBackdrop={this.props.close} isVisible={this.props.show} />
                 <div className={style.Modal}
                     style={
                         {

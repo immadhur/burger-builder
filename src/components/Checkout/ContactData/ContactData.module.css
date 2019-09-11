@@ -1,0 +1,26 @@
+.Body{
+    text-align: center;
+    width: 40%;
+    box-shadow: 4px 1px 4px #c0bbbb;
+    margin: 10px auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    background: #eee
+}
+
+@media (max-width:450px){
+    .Body{
+        width: 370px;
+    }
+}
+
+.Body input{
+    display: block;
+    margin: 5px;
+    background: rgb(224, 219, 219);
+    border: 1px solid rgb(223, 213, 213);
+    padding: 8px;
+    font-family: 'Courier New', Courier, monospace;
+}

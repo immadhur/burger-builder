@@ -1,10 +1,12 @@
 .Button {
-    background-color: black;
+    background-color: transparent;
     border: none;
     color: white;
     outline: none;
     cursor: pointer;
     font: inherit;
+    font-weight: bold;
+    cursor: pointer;
     padding: 5px;
     margin: 5px;
     text-transform: capitalize;
@@ -17,9 +19,9 @@
 } */
 
 .Success {
-    background-color: #5C9210;
+    color: #5C9210;
 }
 
 .Danger {
-    background-color: #944317;
+    color: #944317;
 }

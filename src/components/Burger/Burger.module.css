@@ -1,13 +1,15 @@
 .Body {
-    width: auto;
+    width: 50%;
     margin: auto;
-    height: auto;
+    height: 400px;
     text-align: center;
+    min-width: 400px;
     font-weight: bold;
     font-size: 1.2rem;
     overflow: auto;
+    margin-top: 60px;
 }
-
+/* 
 @media (max-width: 500px) and (min-height: 100px) {
     .Body {
         width: 350px;
@@ -27,4 +29,4 @@
         width: 700px;
         height: 360px;
     }
-}
+} */
