@@ -13,11 +13,8 @@ const burger=(props)=>{
         );
     }
     else{
-        console.log('NEW!!')
         ingredients=Object.entries(props.ingredients).map((item)=>{
-            console.log(item);
         return [...Array(item[1])].map((_, i)=>{
-            console.log(i, item[0]);
             return <BurgerIngredients key={item[0]+i} type={item[0]}/>
         })
     })

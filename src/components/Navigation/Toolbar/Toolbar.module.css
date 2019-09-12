@@ -15,8 +15,14 @@
     display: none;
 }
 
-h3{
+.AppName{
     display: inline;
+    color: black;
+    font: 18px;
+    text-align: center;
+    font-weight: bold;
+    font-family: cursive;
+    align-self: center;
 }
 
 @media (max-width:499px){

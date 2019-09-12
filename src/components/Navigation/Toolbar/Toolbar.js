@@ -9,7 +9,7 @@ const toolbar = (props) => (
             <div/>
             <div/>
         </div>
-        <h3>Burger Builder</h3>
+        <div className={style.AppName}>Burger Builder</div>
         <nav className={style.DisplayNav}>
             <NavItems from="toolbar" />
         </nav>

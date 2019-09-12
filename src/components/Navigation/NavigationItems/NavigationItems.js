@@ -12,7 +12,6 @@ const navItems=(props)=>{
         <ul className={styleToBeApplied}>
             <li className={style.ListBody}><NavLink activeClassName={style.active} exact to='/'>Burger Builder</NavLink></li>
             <li className={style.ListBody}><NavLink activeClassName={style.active} to='/orders'>My Orders</NavLink></li>
-            <li className={style.ListBody}><NavLink activeClassName={style.active} to='/checkout'>Checkout</NavLink></li>
         </ul>
         );
 };

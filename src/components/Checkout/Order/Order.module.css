@@ -1,0 +1,35 @@
+.Body{
+    display: block;
+    border: 1px solid #eee;
+    box-shadow: 2px 4px 4px #eee;
+    margin: 20px 90px;
+    padding: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.Items{
+    /* border-right: groove; */
+    color: rgb(156, 154, 154);
+    display: inline;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.Pipe{
+    border: 0.5px solid;
+    display: inline;
+}
+
+@media (max-width:450px){
+    .Items{
+        display: block;
+        padding: 0px;
+    }
+    .Pipe{
+        display: none;
+    }
+
+    .Body{
+        margin: 20px 50px;
+    }
+}
