@@ -2,9 +2,9 @@ import React from 'react';
 import style from './Button.module.css';
 
 const button = (props) => (
-    <button className={[style.Button, props.type == 'continue' ? style.Success : style.Danger].join(" ")}
+    <button className={[style.Button, props.type === 'continue' ? style.Success : style.Danger].join(" ")}
     onClick={props.click}>
-        {props.text}
+        {props.children}
     </button>
 );
 

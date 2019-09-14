@@ -1,10 +1,18 @@
 import React, { Fragment } from 'react';
 import Button from '../../../UI/Button/Button';
+import {Redirect} from 'react-router-dom';
+
+const checkoutClickedHandler=(props)=>{
+    props.continueClick();
+    return(
+        <Redirect to='/asa'/>
+    );
+}
 
 const orderSummary = (props) => {
     const orderDetails =
         Object.keys(props.ingred).map((item) => {
-            return (<li>
+            return (<li key={item}>
                 <span style={{ textTransform: "capitalize" }}>
                     {item}: {props.ingred[item]}
                 </span>
@@ -17,8 +25,8 @@ const orderSummary = (props) => {
             <strong>Total price: {props.price}</strong>
             <p>Continue to checkout?</p>
             <div style={{'text-align':'right'}}>
-                <Button type='cancel' text='cancel' click={props.cancelClick}/>
-                <Button type='continue' text='continue' click={props.continueClick}/>
+                <Button type='cancel' click={props.cancelClick}>Cancel</Button>
+                <Button type='continue' click={()=>checkoutClickedHandler(props)}>Continue</Button>
             </div>
         </Fragment>
     );

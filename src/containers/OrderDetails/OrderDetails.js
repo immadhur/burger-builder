@@ -44,5 +44,8 @@ class OrderDetails extends Component {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6a041417db9bca5e36030c05f689c5ab599502dd
 export default OrderDetails;

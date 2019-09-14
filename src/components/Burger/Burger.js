@@ -3,7 +3,7 @@ import BurgerIngredients from './BurgerIngredients/BurgerIngredients';
 import style from './Burger.module.css';
 
 const burger=(props)=>{
-    const sumOfIngrefients=Object.values(props.ingredients).reduce((acc, curr)=>acc+curr);
+     const sumOfIngrefients=Object.entries(props.ingredients).length?Object.values(props.ingredients).reduce((acc, curr)=>acc+curr):0;
     let ingredients=<Fragment/>
     if(sumOfIngrefients===0){
         ingredients=(
@@ -12,12 +12,13 @@ const burger=(props)=>{
             </Fragment>
         );
     }
-    else
+    else{
         ingredients=Object.entries(props.ingredients).map((item)=>{
         return [...Array(item[1])].map((_, i)=>{
             return <BurgerIngredients key={item[0]+i} type={item[0]}/>
         })
     })
+    }
     return (
         <div className={style.Body}>
             <BurgerIngredients type='top'/>

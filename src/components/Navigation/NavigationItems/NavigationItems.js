@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './NavigationItems.module.css';
+import {NavLink} from 'react-router-dom';
 
 const navItems=(props)=>{
     let styleToBeApplied;
@@ -9,9 +10,8 @@ const navItems=(props)=>{
         styleToBeApplied=style.Body;
         return(
         <ul className={styleToBeApplied}>
-            <li className={style.ListBody}><a href='/'>Burger Builder</a></li>
-            <li className={style.ListBody}><a href='/'>My Profile</a></li>
-            <li className={style.ListBody}><a href='/'>Checkout</a></li>
+            <li className={style.ListBody}><NavLink activeClassName={style.active} exact to='/'>Burger Builder</NavLink></li>
+            <li className={style.ListBody}><NavLink activeClassName={style.active} to='/orders'>My Orders</NavLink></li>
         </ul>
         );
 };

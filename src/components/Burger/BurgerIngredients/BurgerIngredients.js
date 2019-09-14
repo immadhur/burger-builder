@@ -21,6 +21,9 @@ const ingredient = (props)=>{
             break;
         case 'salad':
             styleToApply=style.Salad;
+            break;
+        default:
+            styleToApply = style.Cheese;
     }
     return (
         <div className={styleToApply}/>
