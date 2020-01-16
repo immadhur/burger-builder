@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Burger Builder
 
-## Available Scripts
+- Burger builder is a website for making a customized burger as per customers taste.
+- Customer has see the choices of ingredients available and customize his burger. For checkout he has ton signup to our website.
+- Customer can choose quantity of each ingredient from fixed given ones.
+- Price would be updated as per the choice of ingredients selected by the customer.
+- After selecting the perfect combination customer can review his order and go to checkout screen to enter some basic delivery details.
+- That's it. He can now wait for his order and view all the history in My Orders tab.
 
-In the project directory, you can run:
+## Prerequisites 
 
-### `npm start`
+- Node must be installed
+- MongoDB must be running
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installing
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+**1. Create a .env file and insert the following code. Replace values with yours!**
 
-### `npm test`
+```bash
+MONGODB_URI=<value>
+JWT_KEY=<value>
+```
+**2. Run**
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+` npm install`
 
-### `npm run build`
+` npm run dev `
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technical 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+- This is a MERN stack application with 'mongoose' as Object modeling tool.
+- It is build on React version 16.8.
+- React hooks is also being used along with lifecycle methods.
+- Redux is used for state management.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Current trade-offs and Future plans
 
-### `npm run eject`
+- Facebook and Google authentication will be added.
+- Payment gateway will be implemented.
+- Logo and animations will be added for a better user experience.
+- Live traking of delivery bo can be implemented by using Google maps API.
+- More ingredients and much more customization can be provided to customer.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Deployment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This application is deployed on heroku with mongoLab as database.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+***Please find below link to the application -***
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[https://madhur-burger-builder.herokuapp.com/](https://madhur-burger-builder.herokuapp.com/)
 
-## Learn More
+## About Me
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Resume Link -
+[Madhur Bansal - Resume](https://drive.google.com/file/d/1htbnwF4rNxJd6kMhkHh2xzUcuSC1NS7e/view?usp=sharing)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### LinkedIn Profile -
+[LinkedIn (Madhur Bansal)](https://www.linkedin.com/in/madhur-bansal-b4b694117/)
