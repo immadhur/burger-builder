@@ -16,8 +16,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "concurrently \"npm run start\" \"cd Backend && npm run start\"",
+    "start": "cd Backend && npm install && npm run start",
+    "heroku-postbuild": "cd .. && npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
