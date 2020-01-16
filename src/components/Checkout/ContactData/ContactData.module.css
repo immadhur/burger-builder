@@ -15,12 +15,3 @@
         width: 370px;
     }
 }
-
-.Body input{
-    display: block;
-    margin: 5px;
-    background: rgb(224, 219, 219);
-    border: 1px solid rgb(223, 213, 213);
-    padding: 8px;
-    font-family: 'Courier New', Courier, monospace;
-}

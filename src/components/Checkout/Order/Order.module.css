@@ -1,10 +1,32 @@
 .Body{
-    display: block;
+    display: grid;
     border: 1px solid #eee;
     box-shadow: 2px 4px 4px #eee;
     margin: 20px 90px;
     padding: 30px;
     font-family: 'Courier New', Courier, monospace;
+}
+
+.BodyLeft{
+    grid-column-start: 1;
+    grid-column-end: 2
+}
+
+.BodyRight{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    text-align: end;
+}
+
+.BodyRight button{
+    background: transparent;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    align-self: center;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .Items{

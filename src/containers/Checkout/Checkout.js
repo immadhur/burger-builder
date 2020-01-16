@@ -3,52 +3,41 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import CheckoutSummary from '../../components/Checkout/CheckoutSummary/CheckoutSummary';
 import ContactData from '../../components/Checkout/ContactData/ContactData';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux'
 
-class Checkout extends Component {
-    state = {
-        ingredients: null,
-        price:0
+const Checkout = props => {
+
+    const cancelClickHandler = () => {
+        props.history.goBack();
     }
 
-    cancelClickHandler=()=>{
-        this.props.history.goBack();
+    const continueClickHandler = () => {
+        props.history.replace(props.match.url + '/contactDetails');
     }
 
-    continueClickHandler=()=>{
-        this.props.history.replace(this.props.match.url+'/contactDetails');
+    let checkoutSummary = <Spinner />
+    if (props.ingredients) {
+        checkoutSummary = <CheckoutSummary
+            ingredients={props.ingredients}
+            cancelClick={cancelClickHandler}
+            continueClick={continueClickHandler} />
     }
+    return (
+        <div style={{ 'text-align': 'center' }}>
+            {checkoutSummary}
+            <Route path={props.match.url + '/contactDetails'} render={() => <ContactData {...props}
+                ingredients={props.ingredients}
+                price={props.price} />} />
+        </div>
+    );
+}
 
-    async componentWillMount() {
-        let urlIngredients={};
-        const queryParams=new URLSearchParams(this.props.location.search);
-        let price=0;
-        for(let param of queryParams.entries()){
-            if(param[0] === 'price')
-                price=param[1];
-            else
-                urlIngredients[param[0]]=Number(param[1]);
-        }
-        this.setState({ingredients:urlIngredients, price:price});
-    }
-
-    render() {
-        let checkoutSummary = <Spinner />
-        if (this.state.ingredients) {
-            checkoutSummary = <CheckoutSummary 
-            ingredients={this.state.ingredients}
-            cancelClick={this.cancelClickHandler}
-            continueClick={this.continueClickHandler} />
-        }
-        return (
-            <div style={{'text-align':'center'}}>
-                {checkoutSummary}
-                <Route path={this.props.match.url+'/contactDetails'} render={()=><ContactData {...this.props} 
-                ingredients={this.state.ingredients}
-                price={this.state.price}/>}/>
-            </div>
-        );
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.burger.ingredients,
+        price: state.burger.price
     }
 }
 
-export default Checkout;
+export default connect(mapStateToProps)(Checkout);

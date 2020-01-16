@@ -37,6 +37,22 @@
     border-bottom: 4px solid black;
 }
 
+.ListBodyMobile a{
+    border:none;
+    padding: 16px 20px;
+    color: black;
+    font-weight: normal;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+    width: inherit;
+}
+
+.ListBodyMobile a:active,
+.ListBodyMobile a.active{
+    color: blue;
+}
+
 @media(max-width:500px){
     .Body{
         height: auto;

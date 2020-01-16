@@ -11,7 +11,7 @@ const toolbar = (props) => (
         </div>
         <div className={style.AppName}>Burger Builder</div>
         <nav className={style.DisplayNav}>
-            <NavItems from="toolbar" />
+            <NavItems isLoggedIn={props.isLoggedIn} from="toolbar" />
         </nav>
     </div>
 );

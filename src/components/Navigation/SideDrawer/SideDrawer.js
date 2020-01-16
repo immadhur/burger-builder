@@ -12,12 +12,12 @@ const sideDrawer = (props) => {
 
     return (
         <Fragment>
-            <Backdrop isVisible={props.isVisible} hideBackdrop={props.hideBackdrop} />
-            <div className={styleToBeApplied.join(' ')}>
+            <Backdrop isVisible={props.isVisible} click={props.click} />
+            <div className={styleToBeApplied.join(' ')} onClick={props.click}>
                 <div className={style.Logo}>
                     <Logo />
                 </div>
-                <NavItems from="sidedrawer" />
+                <NavItems isLoggedIn={props.isLoggedIn} from="sidedrawer" />
             </div>
         </Fragment>
     );

@@ -16,11 +16,13 @@ const buildControls=(props)=>{
     if(props.totalPrice===0)
         disableOrderButton=true;
 
+        let btnText= props.isLoggedIn?'ORDER NOW':'SIGNUP TO CONTINUE';
+
     return(
         <div className={style.Body}>
             <p>Current Price: <strong>{props.totalPrice}</strong></p>
             {controls}
-            <button onClick={props.showSummaryDialog} className={style.OrderButton} disabled={disableOrderButton}>Order Now</button>
+            <button onClick={props.showSummaryDialog} className={style.OrderButton} disabled={disableOrderButton}>{btnText}</button>
         </div>
     );
 }

@@ -1,51 +1,88 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Order from '../../components/Checkout/Order/Order';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
+import './OrderDetails.css';
+import {
+    CSSTransition, TransitionGroup
+} from 'react-transition-group';
 
-class OrderDetails extends Component {
-    state = {
-        orders: [],
-        loading: true,
-    }
+const OrderDetails = props =>{
+    const [orders, setOrders]=useState([]);
+    const [loading, setLoading]=useState(true);
 
-    async componentDidMount() {
+    useEffect(()=>{
+        const fetchData=async ()=>{
         try {
-            const res = await axios.get('/orders.json');
-            const dbRes = res.data;
+            const res = await axios.get('/orders');
+            const dbRes = res.data.body;
             let ordersToDisplay = [];
-            for (let key in res.data) {
+            for (let key in dbRes) {
+                if (dbRes[key].email === props.email)
                 ordersToDisplay.push(
                     {
                         ...dbRes[key],
-                        key: key
+                        key: dbRes[key]._id
                     })
+                }
+                setLoading(false);
+                console.log(ordersToDisplay);
+                setOrders(ordersToDisplay);
+            } catch (error) {
+                console.log('Error', error);
+                setLoading(false);
             }
-            this.setState({ orders: ordersToDisplay, loading: false });
-            console.log(res.data);
+        }
+        fetchData();
+    }, [])
+        
+    const deleteHandler = async (key) => {
+        try {
+            setLoading(true);
+            const res = await axios.delete(`/order/${key}`);
+            const dbRes = res.status;
+            console.log(res);
+            if (dbRes === 200) {
+                const orderArr=[...orders]
+                let updatedOrderArr=orderArr.filter(val=>val.key!==key)
+                setLoading(false);
+                setOrders(updatedOrderArr);
+            }
         } catch (error) {
-            console.log('Kuch galat ho gya!');
-            this.setState({ loading: false });
+            console.log('Error', error);
+                setLoading(false);
         }
     }
 
-    render() {
-        let orders = <Spinner />
-        if (!this.state.loading) {
-            orders = this.state.orders.map(item =>
-                <Order key={item.key} price={item.price} order={item}/>
-            );
+        let ordersToDisplay=[];
+        if (!loading) {
+            ordersToDisplay = orders.length > 0 && orders.map(item =>
+                // <CSSTransition timeout={500} key={item.key} classNames="move">
+                    <Order deleteClick={() => deleteHandler(item.key)} key={item.key} price={item.price} order={item} />
+                // </CSSTransition>
+                
+            )
         }
+
+        console.log(ordersToDisplay);
         return (
             <div style={{ marginTop: '80px' }}>
-                {orders}
+                {loading&&<Spinner/>}
+                {(orders.length===0 && !loading) && <p className="NoOrders">NO ORDERS TO DISPLAY</p>}
+                {/* <TransitionGroup> */}
+                    {ordersToDisplay}
+                {/* </TransitionGroup> */}
             </div>
         );
     }
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.signup.token,
+        email: state.signup.email
+    }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6a041417db9bca5e36030c05f689c5ab599502dd
-export default OrderDetails;
+export default connect(mapStateToProps)(withErrorHandler(OrderDetails, axios));

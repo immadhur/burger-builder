@@ -1,0 +1,8 @@
+.Body{
+    width: 50%;
+    margin: 100px auto;
+    background: white;
+    box-shadow: 4px 0px 7px #ccc;
+    text-align: center;
+    padding: 10px;
+}

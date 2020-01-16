@@ -1,28 +1,24 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import style from './DialogBoxModel.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-class DialogBox extends Component {
-    shouldComponentUpdate = (nextProps, nextState) => {
-        return nextProps.show !== this.props.show ||
-            nextProps.children !== this.props.children;
-    }
-    render() {
-
+const DialogBox =props=> {
         return (
             <Fragment>
-                <Backdrop hideBackdrop={this.props.close} isVisible={this.props.show} />
+                <Backdrop click={props.close} isVisible={props.show} />
                 <div className={style.Modal}
                     style={
                         {
-                            transform: this.props.show ? "translateY(0)" : "translateY(-100vh)",
-                            opacity: this.props.show ? "1" : "0"
+                            transform: props.show ? "translateY(0)" : "translateY(-100vh)",
+                            opacity: props.show ? "1" : "0"
                         }}>
-                    {this.props.children}
+                    {props.children}
                 </div>
             </Fragment>
         );
     }
-}
 
-export default DialogBox;
+export default React.memo(DialogBox, (prevProps, nextProps)=>{
+    return nextProps.show === prevProps.show ||
+            nextProps.children === prevProps.children;
+});

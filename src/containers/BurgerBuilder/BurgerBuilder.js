@@ -1,13 +1,14 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, lazy, Suspense } from 'react';
 import Burger from '../../components/Burger/Burger';
 import style from './BurgerBuilder.module.css';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import DialogBoxModel from '../../components/UI/DialogBoxModel/DialogBoxModel';
-import OrderSummary from '../../components/Burger/BuildControls/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import {Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions';
+const OrderSummary = lazy(()=> import('../../components/Burger/BuildControls/OrderSummary/OrderSummary'));
 
 const PriceChart = {
     cheese: 25,
@@ -16,114 +17,110 @@ const PriceChart = {
     salad: 20
 }
 
-class BurgerBuilder extends Component {
+const BurgerBuilder =props=>{
 
-    state = {
-        ingredients: null,
-        totalPrice: 0,
-        showOrderSummary: false,
-        loading: false,
-        error: false,
-        checkout:false
-    }
+        const [showOrderSummary, setShowOrderSummary] = useState(false);
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(false);
 
-    componentDidMount = async () => {
+    useEffect(()=>{
+    (async () => {
         try {
-            const res = await axios.get('/ingredients.json');
-            let price=this.state.totalPrice;
-            Object.keys(res.data).map(key=>{
-                return price+=PriceChart[key]*res.data[key];
+            const res = await axios.get('/ingredients');
+            let price = 0;
+            console.log(res.data);
+            Object.keys(res.data.body).map(key => {
+                return price += PriceChart[key] * res.data.body[key];
             })
-            this.setState({ ingredients: res.data, totalPrice:price });
+            if (!props.building)
+                props.initializeData(res.data.body, price);
         } catch (error) {
-            this.setState({ error: true });
+            setError(true);
         }
+    })();
+}, [])
+
+    const showSummaryDialog = () => {
+        props.isLoggedIn ?
+            setShowOrderSummary( true ) :
+            props.history.push('/login');
     }
 
-    addIngredientHandler = (ingred) => {
-        let updatedIngr = { ...this.state.ingredients };
-        updatedIngr[ingred] += 1;
-        const totalPrice = this.state.totalPrice + PriceChart[ingred];
-        this.setState({ ingredients: updatedIngr, totalPrice });
+    const hideSummaryDialog = () => {
+            setShowOrderSummary( false );
     }
 
-    removeIngredientHandler = (ingred) => {
-        let updatedIngr = { ...this.state.ingredients };
-        if (updatedIngr[ingred] <= 0)
-            return;
-        updatedIngr[ingred] -= 1;
-        const totalPrice = this.state.totalPrice - PriceChart[ingred];
-
-        this.setState({ ingredients: updatedIngr, totalPrice });
+    const continueToCheckout = () => {
+            setShowOrderSummary( false );
+            setLoading( false );
+        props.history.push('/checkout');
     }
 
-    showSummaryDialog = () => {
-        this.setState({ showOrderSummary: true });
-    }
-
-    hideSummaryDialog = () => {
-        this.setState({ showOrderSummary: false });
-    }
-
-    continueToCheckout = () => {
-            this.setState({ loading: false, showOrderSummary: false});
-            let queryParam=[];
-            const ingr=this.state.ingredients;
-            for(let i in ingr){
-                queryParam.push(encodeURIComponent(i)+'='+encodeURIComponent(ingr[i]));
-            }
-            queryParam.push(`price=${this.state.totalPrice}`)
-            this.props.history.push({
-                pathname:'/checkout',
-                search: '?'+queryParam.join('&')
-            });
-    }
-
-    render() {
-        // if(this.state.checkout){
+        // if(state.checkout){
         //     return <Redirect to='/checkout'/>
         // }
 
-        let disableInfo = { ...this.state.ingredients };
+        let disableInfo = { ...props.ingredients };
         for (let ingred in disableInfo) {
             disableInfo[ingred] = disableInfo[ingred] === 0;
         }
 
         let orderSummary = null;
-        let burger = this.state.error?<p>Unable to fetch data!</p>:<Spinner />;
+        let burger = error ? <p>Unable to fetch data!</p> : <Spinner />;
 
-        if (this.state.ingredients) {
+        if (props.ingredients) {
             burger = (
                 <Fragment>
-                    <Burger ingredients={this.state.ingredients} />
-                    <BuildControls ingredients={this.state.ingredients}
-                        addIngred={this.addIngredientHandler}
-                        removeIngred={this.removeIngredientHandler}
+                    <Burger ingredients={props.ingredients} />
+                    <BuildControls ingredients={props.ingredients}
+                        addIngred={props.addIngredient}
+                        removeIngred={props.removeIngredient}
                         disable={disableInfo}
-                        totalPrice={this.state.totalPrice}
-                        showSummaryDialog={this.showSummaryDialog} />
+                        totalPrice={props.totalPrice}
+                        showSummaryDialog={showSummaryDialog}
+                        isLoggedIn={props.isLoggedIn} />
                 </Fragment>
             );
 
             orderSummary = <OrderSummary
-                ingred={this.state.ingredients}
-                price={this.state.totalPrice}
-                cancelClick={this.hideSummaryDialog}
-                continueClick={this.continueToCheckout} />;
+                ingred={props.ingredients}
+                price={props.totalPrice}
+                cancelClick={hideSummaryDialog}
+                continueClick={continueToCheckout} />;
         }
 
-        if (this.state.loading)
+        if (loading)
             orderSummary = <Spinner />
 
         return (
-            <div style={{ 'marginTop': '60px' }}>
-                <DialogBoxModel show={this.state.showOrderSummary} close={this.hideSummaryDialog}>
+            <>
+                <Suspense fallback={<div>Loading...</div>}>
+                <DialogBoxModel show={showOrderSummary} close={hideSummaryDialog}>
                     {orderSummary}
                 </DialogBoxModel>
+                </Suspense>
                 {burger}
-            </div>
+            </>
         );
+    }
+
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.burger.ingredients,
+        totalPrice: state.burger.price,
+        isLoggedIn: state.signup.token !== null,
+        building: state.burger.building
     }
 }
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addIngredient: (ingredient) => dispatch(actions.addIngredient(ingredient)),
+        removeIngredient: (ingredient) => dispatch(actions.removeIngredient(ingredient)),
+        initializeData: (ingred, price) => dispatch(actions.initialize(ingred, price)),
+        resetPrice: () => dispatch(actions.resetPrice()),
+        startBuilding: () => dispatch(actions.startBuilding())
+    }
+}
+
+export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder), axios);
